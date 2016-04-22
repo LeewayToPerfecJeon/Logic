@@ -25,6 +25,7 @@ public class CPT {
         }
     }
 
+    //only need this method for the player b/c it's already initialized for the AI
     public static int initializeChips() {
         //we can always change this number
         return 7;
@@ -48,6 +49,7 @@ public class CPT {
         String answer = br.readLine();
         if (answer.equalsIgnoreCase("yes")) {
             y.add(x.get(0));
+            z= z+a;
         } else if (answer.equalsIgnoreCase("no")) {
             z--;
             a++;
@@ -62,7 +64,6 @@ public class CPT {
     //to be used at the end of the game to count points, not before
     public static int checkConsecutive(ArrayList<Integer> x) {
         int total = 0;
-        int j;
         //wait need to sort the list into numerical order first 
         for (int i = 0; i < x.size()-1; i++) {
             if (x.get(i) == (x.get(i + 1))+1) {    
@@ -101,5 +102,18 @@ public class CPT {
             System.out.println("Player 3 has won.");
         }
     }
+    
+    public static boolean checkChips (int chips){
+        if (chips==0){
+            System.out.println("You do not have enough chips to skip this number.");
+            return false;
+            //then after this it would automatically run the getNumber method
+        }
+        else{
+            return true;
+        }
+    }
+    
+    //need a method to randomly pick the hidden number
 
 }
