@@ -1,0 +1,66 @@
+ackage cpt;
+
+import java.util.ArrayList;
+
+public class AI {
+    
+    private int chips;
+    private ArrayList myNumbers;
+    //the other two players except yourself
+    private ArrayList player1;
+    private ArrayList player2;
+    private ArrayList numbersLeft;
+
+    public AI (){
+      //Question: do you have to initialize arraylists? 
+        chips = 7;
+        
+    }
+
+    public AI(int chips, ArrayList myNumbers, ArrayList player1, ArrayList player2, ArrayList numbersLeft) {
+        this.chips = chips;
+        this.myNumbers = myNumbers;
+        this.player1 = player1;
+        this.player2 = player2;
+        this.numbersLeft = numbersLeft;
+    }
+
+    public int getChips() {
+        return chips;
+    }
+
+    public ArrayList getMyNumbers() {
+        return myNumbers;
+    }
+
+    public ArrayList getNumbersLeft() {
+        return numbersLeft;
+    }
+
+    public ArrayList getPlayer1() {
+        return player1;
+    }
+
+    public ArrayList getPlayer2() {
+        return player2;
+    }
+
+    public void setChips(int chips) {
+        this.chips = chips;
+    }
+
+    public void setMyNumbers(ArrayList myNumbers) {
+        this.myNumbers = myNumbers;
+    }
+
+    public void setNumbersLeft(ArrayList numbersLeft) {
+        this.numbersLeft = numbersLeft;
+    }
+
+    public void setPlayer1(ArrayList player1) {
+        this.player1 = player1;
+    }
+
+    public void setPlayer2(ArrayList player2) {
+        this.player2 = player2;
+    }
