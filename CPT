@@ -1,0 +1,105 @@
+package cpt;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+//apparently we can't make the AI perfect sooooo
+public class CPT {
+
+    public static void main(String[] args) throws IOException {
+        InputStreamReader inStream = new InputStreamReader(System.in);
+
+        BufferedReader br = new BufferedReader(inStream);
+
+        System.out.println("Minus Auction");
+        createNumbers();
+
+    }
+
+    public static void createNumbers() {
+        ArrayList<Integer> numbers = new ArrayList<Integer>();
+        for (int i = -1; i > -16; i--) {
+            numbers.add(i);
+        }
+    }
+
+    public static int initializeChips() {
+        //we can always change this number
+        return 7;
+
+    }
+
+    //need a method to randomize the numbers ( I don't know the random thing so just skip for now
+    //make it return int 
+    public static int getNumber(ArrayList<Integer> x) {
+        return x.get(0);
+    }
+
+    //fix the br thing I don't have the code in this computer 
+    //do we really need classes for this tho? Do we have to use it?
+    // x=number list; y=your numbers list; z=your number of chips; a=chip pool for that number
+    //have to initialize a=0 before using this method
+    //not within this method b/c it will reset if the user inputs an invalid answer
+    //maybe we should rename the arraylist parameters so that we know what they are 
+    public static void wantNumber(ArrayList<Integer> x, ArrayList<Integer> y, int z, int a) {
+        System.out.println("Would you like to take the number?");
+        String answer = br.readLine();
+        if (answer.equalsIgnoreCase("yes")) {
+            y.add(x.get(0));
+        } else if (answer.equalsIgnoreCase("no")) {
+            z--;
+            a++;
+        } else {
+            System.out.println("Please enter a valid answer: ");
+            wantNumber(x, y, z, a);
+        }
+
+    }
+
+    //x being your list of numbers that you got 
+    //to be used at the end of the game to count points, not before
+    public static int checkConsecutive(ArrayList<Integer> x) {
+        int total = 0;
+        int j;
+        //wait need to sort the list into numerical order first 
+        for (int i = 0; i < x.size()-1; i++) {
+            if (x.get(i) == (x.get(i + 1))+1) {    
+                for (int k=1; k < x.size()-i; k++){
+                    if (x.get(i) == x.get(k)){
+                        x.set(k, 0);
+                        //dunno if this works 
+                    }
+                }
+                
+            }
+
+        }
+        
+        //get total
+        for (int a=0; a< x.size(); a++){
+            total = total + x.get(a);
+        }
+        return total;
+    }
+    
+    public static int finalTotal(int total, int chips){
+        return total + chips;
+        
+    }
+    
+    public static void checkWinner (int total1, int total2, int total3){
+        if (total1>total2 && total1>total3){
+            //assuming that the player will be set as player #1
+            System.out.println("You have won.");
+        }
+        else if (total2>total1 && total2>total3){
+            System.out.println("Player 2 has won.");
+        }
+        else{
+            System.out.println("Player 3 has won.");
+        }
+    }
+
+}
