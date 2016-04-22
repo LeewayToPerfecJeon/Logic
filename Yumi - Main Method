@@ -20,7 +20,7 @@ public class CPT {
 
     public static void createNumbers() {
         ArrayList<Integer> numbers = new ArrayList<Integer>();
-        for (int i = -1; i > -16; i--) {
+        for (int i = -1; i > -21; i--) {
             numbers.add(i);
         }
     }
