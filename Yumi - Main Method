@@ -1,5 +1,6 @@
 package cpt;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,21 +8,23 @@ import java.util.ArrayList;
 
 //apparently we can't make the AI perfect sooooo
 public class CPT {
+    static ArrayList<Integer> numbers = new ArrayList<>();
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     public static void main(String[] args) throws IOException {
         
 
         System.out.println("Minus Auction");
-        createNumbers();
+        numbers = createNumbers();
 
     }
 
-    public static void createNumbers() {
-        ArrayList<Integer> numbers = new ArrayList<Integer>();
+    public static <Integer> ArrayList createNumbers() {
+                     
         for (int i = -1; i > -21; i--) {
-            numbers.add(i);
+             numbers.add(i);      
         }
+        return numbers;
     }
 
     //only need this method for the player b/c it's already initialized for the AI
