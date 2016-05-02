@@ -8,10 +8,9 @@ import java.util.ArrayList;
 //apparently we can't make the AI perfect sooooo
 public class CPT {
 
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     public static void main(String[] args) throws IOException {
-        InputStreamReader inStream = new InputStreamReader(System.in);
-
-        BufferedReader br = new BufferedReader(inStream);
+        
 
         System.out.println("Minus Auction");
         createNumbers();
@@ -32,23 +31,41 @@ public class CPT {
 
     }
 
-    //need a method to randomize the numbers ( I don't know the random thing so just skip for now
-    //make it return int 
+     
     public static int getNumber(ArrayList<Integer> x) {
-        return x.get(0);
+        int upperbound = (x.size()-1);
+        int lowerbound = 0;
+        int index = (int)(Math.random() * ((upperbound - lowerbound) + 1) + lowerbound);
+        int number = x.get(index);
+        //remove removes the number and the numbers after that all move one spot to the left right
+        x.remove(index);
+        return number;
+        
+    }
+    
+   
+    public static int pickHiddenCube(ArrayList<Integer>x){
+        int upperbound = (x.size()-1);
+        int lowerbound = 0;
+        int index = (int)(Math.random() * ((upperbound - lowerbound) + 1) + lowerbound);
+        int hiddenCube = x.get(index);
+        x.remove(index);
+        return hiddenCube;
     }
 
-    //fix the br thing I don't have the code in this computer 
+   
     //do we really need classes for this tho? Do we have to use it?
     // x=number list; y=your numbers list; z=your number of chips; a=chip pool for that number
     //have to initialize a=0 before using this method
     //not within this method b/c it will reset if the user inputs an invalid answer
     //maybe we should rename the arraylist parameters so that we know what they are 
-    public static void wantNumber(ArrayList<Integer> x, ArrayList<Integer> y, int z, int a) {
+    public static void wantNumber(ArrayList<Integer> x, ArrayList<Integer> y, int z, int a) throws IOException{
         System.out.println("Would you like to take the number?");
         String answer = br.readLine();
         if (answer.equalsIgnoreCase("yes")) {
+            //get number
             y.add(x.get(0));
+            //get the pooled chips
             z= z+a;
         } else if (answer.equalsIgnoreCase("no")) {
             z--;
@@ -60,7 +77,7 @@ public class CPT {
 
     }
 
-    //x being your list of numbers that you got 
+    //x being your list of numbers that you have 
     //to be used at the end of the game to count points, not before
     public static int checkConsecutive(ArrayList<Integer> x) {
         int total = 0;
@@ -76,8 +93,7 @@ public class CPT {
                 
             }
 
-        }
-        
+        }        
         //get total
         for (int a=0; a< x.size(); a++){
             total = total + x.get(a);
@@ -114,6 +130,6 @@ public class CPT {
         }
     }
     
-    //need a method to randomly pick the hidden number
+    
 
 }
