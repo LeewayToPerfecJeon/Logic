@@ -1,6 +1,5 @@
 package cpt;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,21 +7,58 @@ import java.util.ArrayList;
 
 //apparently we can't make the AI perfect sooooo
 public class CPT {
+
     static ArrayList<Integer> numbers = new ArrayList<>();
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
     public static void main(String[] args) throws IOException {
-        
 
         System.out.println("Minus Auction");
         numbers = createNumbers();
 
     }
 
+    //AI methods
+    public static boolean checkConsecutive(ArrayList<Integer> x, int y, ArrayList<Integer> player1, ArrayList<Integer> player2) {
+        //true = take; false = pass        
+        //x being my arraylist of numbers
+        //y being the number that's picked for that round
+
+        for (int i = 0; i < x.size(); i++) {
+            //first check if they're 1 away from mine
+            if ((x.get(i)) == (y + 1) || x.get(i) == (y - 1)) {
+                //then check if other people need it + number of chips in the pool
+                for (int j = 0; j < player1.size(); j++) {
+                    //so if the number is NOT 1 or 2 up from any number the other players have, 
+                    //pass the number so that you can collect more chips 
+                    if ((x.get(j)) != (y + 1) || x.get(j) != (y - 1) || x.get(j) != (y - 2) || x.get(j) != (y + 2)) {
+                        for (int k = 0; k < player2.size(); k++) {
+                            if ((x.get(k)) != (y + 1) || x.get(k) != (y - 1) || x.get(k) != (y - 2) || x.get(k) != (y + 2)) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+
+            } 
+
+        }
+        
+        //soooo am I building the whole AI in this method..
+        
+        //
+        
+        
+        return true;
+
+    }
+
+    //game methods
     public static <Integer> ArrayList createNumbers() {
-                     
+
         for (int i = -1; i > -21; i--) {
-             numbers.add(i);      
+            numbers.add(i);
         }
         return numbers;
     }
@@ -34,42 +70,39 @@ public class CPT {
 
     }
 
-     
     public static int getNumber(ArrayList<Integer> x) {
-        int upperbound = (x.size()-1);
+        int upperbound = (x.size() - 1);
         int lowerbound = 0;
-        int index = (int)(Math.random() * ((upperbound - lowerbound) + 1) + lowerbound);
+        int index = (int) (Math.random() * ((upperbound - lowerbound) + 1) + lowerbound);
         int number = x.get(index);
         //remove removes the number and the numbers after that all move one spot to the left right
         x.remove(index);
         return number;
-        
+
     }
-    
-   
-    public static int pickHiddenCube(ArrayList<Integer>x){
-        int upperbound = (x.size()-1);
+
+    public static int pickHiddenCube(ArrayList<Integer> x) {
+        int upperbound = (x.size() - 1);
         int lowerbound = 0;
-        int index = (int)(Math.random() * ((upperbound - lowerbound) + 1) + lowerbound);
+        int index = (int) (Math.random() * ((upperbound - lowerbound) + 1) + lowerbound);
         int hiddenCube = x.get(index);
         x.remove(index);
         return hiddenCube;
     }
 
-   
     //do we really need classes for this tho? Do we have to use it?
     // x=number list; y=your numbers list; z=your number of chips; a=chip pool for that number
     //have to initialize a=0 before using this method
     //not within this method b/c it will reset if the user inputs an invalid answer
     //maybe we should rename the arraylist parameters so that we know what they are 
-    public static void wantNumber(ArrayList<Integer> x, ArrayList<Integer> y, int z, int a) throws IOException{
+    public static void wantNumber(ArrayList<Integer> x, ArrayList<Integer> y, int z, int a) throws IOException {
         System.out.println("Would you like to take the number?");
         String answer = br.readLine();
         if (answer.equalsIgnoreCase("yes")) {
             //get number
             y.add(x.get(0));
             //get the pooled chips
-            z= z+a;
+            z = z + a;
         } else if (answer.equalsIgnoreCase("no")) {
             z--;
             a++;
@@ -82,57 +115,52 @@ public class CPT {
 
     //x being your list of numbers that you have 
     //to be used at the end of the game to count points, not before
-    public static int checkConsecutive(ArrayList<Integer> x) {
+    public static int finalCheckConsecutive(ArrayList<Integer> x) {
         int total = 0;
         //wait need to sort the list into numerical order first 
-        for (int i = 0; i < x.size()-1; i++) {
-            if (x.get(i) == (x.get(i + 1))+1) {    
-                for (int k=1; k < x.size()-i; k++){
-                    if (x.get(i) == x.get(k)){
+        for (int i = 0; i < x.size() - 1; i++) {
+            if (x.get(i) == (x.get(i + 1)) + 1) {
+                for (int k = 1; k < x.size() - i; k++) {
+                    if (x.get(i) == x.get(k)) {
                         x.set(k, 0);
                         //dunno if this works 
                     }
                 }
-                
+
             }
 
-        }        
+        }
         //get total
-        for (int a=0; a< x.size(); a++){
+        for (int a = 0; a < x.size(); a++) {
             total = total + x.get(a);
         }
         return total;
     }
-    
-    public static int finalTotal(int total, int chips){
+
+    public static int finalTotal(int total, int chips) {
         return total + chips;
-        
+
     }
-    
-    public static void checkWinner (int total1, int total2, int total3){
-        if (total1>total2 && total1>total3){
+
+    public static void checkWinner(int total1, int total2, int total3) {
+        if (total1 > total2 && total1 > total3) {
             //assuming that the player will be set as player #1
             System.out.println("You have won.");
-        }
-        else if (total2>total1 && total2>total3){
+        } else if (total2 > total1 && total2 > total3) {
             System.out.println("Player 2 has won.");
-        }
-        else{
+        } else {
             System.out.println("Player 3 has won.");
         }
     }
-    
-    public static boolean checkChips (int chips){
-        if (chips==0){
+
+    public static boolean checkChips(int chips) {
+        if (chips == 0) {
             System.out.println("You do not have enough chips to skip this number.");
             return false;
             //then after this it would automatically run the getNumber method
-        }
-        else{
+        } else {
             return true;
         }
     }
-    
-    
 
 }
