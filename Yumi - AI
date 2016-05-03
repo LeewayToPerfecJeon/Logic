@@ -64,3 +64,15 @@ public class AI {
     public void setPlayer2(ArrayList player2) {
         this.player2 = player2;
     }
+    
+    //things that the AI should consider to make a decision
+    //1. is the number consecutive to mine? smaller or larger?
+    //2. should I pass it and let it go around a turn to collect more chips b/c the number is not related to the other players
+    //2-1. so check if the number is related to the other players 
+    //2-2. should I take the number if the number is small enough? just to mess the other player up? 
+    //cause if they're waiting for a number that's in between two numbers it's like HA screw you now you can never make it consecutive
+    //3. are there enough chips in the pool to just take the number?
+    //3-1. is there a possibility that this number has consecutive numbers that have not come out yet?
+    //3-2. ..?
+   
+    //so which ones need the probability again..?
