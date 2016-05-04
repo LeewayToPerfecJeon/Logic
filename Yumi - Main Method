@@ -9,22 +9,57 @@ import java.util.ArrayList;
 public class CPT {
 
     static ArrayList<Integer> numbers = new ArrayList<>();
+    static ArrayList<Player> players = new ArrayList<>();
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String[] args) throws IOException {
 
+        int currentNumber;
+        int chipPool=0;
         System.out.println("Minus Auction");
+        
+        //you; i=0
+        createPlayer();
+        //AI 1; i=1
+        createPlayer();
+        //AI 2; i=2
+        createPlayer();
+        
+        
         numbers = createNumbers();
+        currentNumber = getNumber(numbers);
+        System.out.println("Number: " + currentNumber);
+        
+        //1st turn 
+        if (wantNumber(currentNumber, (players.get(0)).getMyNumbers() , (players.get(0).getChips()), chipPool)==(true)){
+            //if the player accepts the number, then activate the AILogic3
+            if (AILogic3(currentNumber)==true){
+                
+            }
+        };
+        
+        
 
+    }
+    
+    public static void createPlayer(){
+        int chips=7;
+        ArrayList<Integer> myNumbers = new ArrayList<>();
+        ArrayList<Integer> player1 = new ArrayList<>();
+        ArrayList<Integer> player2 = new ArrayList<>();
+        players.add(new Player( chips,  myNumbers,  player1, player2));
+        
     }
 
     //AI methods
-    public static boolean checkConsecutive(ArrayList<Integer> x, int y, ArrayList<Integer> player1, ArrayList<Integer> player2) {
+    public static boolean AILogic1 (ArrayList<Integer> x, int y, ArrayList<Integer> player1, ArrayList<Integer> player2) {
         //true = take; false = pass        
         //x being my arraylist of numbers
         //y being the number that's picked for that round
 
+        
+        //for loop to check whether to let the number go around once to collect chips 
         for (int i = 0; i < x.size(); i++) {
             //first check if they're 1 away from mine
             if ((x.get(i)) == (y + 1) || x.get(i) == (y - 1)) {
@@ -44,14 +79,27 @@ public class CPT {
             } 
 
         }
-        
-        //soooo am I building the whole AI in this method..
-        
-        //
-        
-        
+
         return true;
 
+    }
+    
+    //x= # of chips in the pool
+    //y = the # for that round
+    public static boolean AILogic2 (int x, int y){
+        if (x>=y){
+            return true;
+        }
+        
+        return true;
+    }
+    
+    //at the beginning of the game, to decide whether to take the number or not
+    public static boolean AILogic3 (int x){
+        if (x<-11){
+            return true;
+        }
+        return false;
     }
 
     //game methods
@@ -95,22 +143,29 @@ public class CPT {
     //have to initialize a=0 before using this method
     //not within this method b/c it will reset if the user inputs an invalid answer
     //maybe we should rename the arraylist parameters so that we know what they are 
-    public static void wantNumber(ArrayList<Integer> x, ArrayList<Integer> y, int z, int a) throws IOException {
+    public static boolean wantNumber(int x, ArrayList<Integer> y, int z, int a) throws IOException {
         System.out.println("Would you like to take the number?");
         String answer = br.readLine();
         if (answer.equalsIgnoreCase("yes")) {
             //get number
-            y.add(x.get(0));
+            y.add(x);
             //get the pooled chips
             z = z + a;
-        } else if (answer.equalsIgnoreCase("no")) {
+            return true;
+        } else   {
             z--;
             a++;
-        } else {
-            System.out.println("Please enter a valid answer: ");
-            wantNumber(x, y, z, a);
-        }
+            return false;
+        } 
 
+    }
+    
+    //for AI only
+    //x = AI number
+    //LEFT OFF HERE 
+    public static void receiveNumber(int x){
+        //it needs to add to the my numbers list...how do you do this
+        (players.get(x)).setMyNumbers();
     }
 
     //x being your list of numbers that you have 
