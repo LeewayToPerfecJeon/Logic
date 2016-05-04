@@ -163,9 +163,9 @@ public class CPT {
     //for AI only
     //x = AI number
     //LEFT OFF HERE 
-    public static void receiveNumber(int x){
+     public static void receiveNumber(int x, int y){
         //it needs to add to the my numbers list...how do you do this
-        (players.get(x)).setMyNumbers();
+        (players.get(x)).setMyNumbers(((players.get(x)).getMyNumbers).add(x));
     }
 
     //x being your list of numbers that you have 
