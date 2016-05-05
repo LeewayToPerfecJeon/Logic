@@ -31,13 +31,13 @@ public class CPT {
         currentNumber = getNumber(numbers);
         System.out.println("Number: " + currentNumber);
         
-        //1st turn 
-        if (wantNumber(currentNumber, (players.get(0)).getMyNumbers() , (players.get(0).getChips()), chipPool)==(true)){
-            //if the player accepts the number, then activate the AILogic3
-            if (AILogic3(currentNumber)==true){
-                
-            }
-        };
+        //1st turn for user
+        //so if the player accepts the number
+        if (wantNumber(currentNumber, (players.get(0)).getMyNumbers(), (players.get(0).getChips()), chipPool) == (true)) {
+
+        } else {
+
+        }
         
         
 
