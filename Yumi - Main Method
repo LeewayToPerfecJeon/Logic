@@ -16,49 +16,97 @@ public class CPT {
     public static void main(String[] args) throws IOException {
 
         int currentNumber;
-        int chipPool=0;
+        int chipPool = 0;
         System.out.println("Minus Auction");
-        
+
         //you; i=0
         createPlayer();
         //AI 1; i=1
         createPlayer();
         //AI 2; i=2
         createPlayer();
-        
-        
+
         numbers = createNumbers();
+        
+        int hiddenCube = pickHiddenCube(numbers);
+        
         currentNumber = getNumber(numbers);
         System.out.println("Number: " + currentNumber);
         
-        //1st turn for user
+        //figure out how you're gonna clear the chip pool when somebody accepts the number**
+
+        //1st turn 
         //so if the player accepts the number
-        if (wantNumber(currentNumber, (players.get(0)).getMyNumbers(), (players.get(0).getChips()), chipPool) == (true)) {
+        if (wantNumber(currentNumber, (players.get(0)).getMyNumbers(), (players.get(0).getChips()), chipPool) == true) {
+            System.out.print((players.get(0)).getMyNumbers());
+            System.out.println(", " + (players.get(0)).getChips());
 
-        } else {
+            //new number
+            currentNumber = getNumber(numbers);
+            System.out.println("Number: " + currentNumber);
+            if (AILogic3(currentNumber) == true) {
+                
+                receiveNumber(1, currentNumber, chipPool );
+   
+               
+                System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
+                System.out.println(", " + (players.get(1)).getChips());
+            } else {
+                //pass number method to build later when we loop it
+                //I think we have to have a loop in here as well since the current number can't change
 
+                if (AILogic3(currentNumber) == true) {
+                    receiveNumber(2, currentNumber, chipPool );
+                    System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
+                    System.out.println(", " + (players.get(2)).getChips());
+                } else {
+
+                }
+
+            }
+
+        } //if the player does not accept the number
+        //make sure the current number didn't change
+        else {
+            if (AILogic3(currentNumber) == true) {
+                wantNumber(currentNumber, (players.get(1)).getMyNumbers(), (players.get(1).getChips()), chipPool);
+                System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
+                System.out.println(", " + (players.get(1)).getChips());
+            } else {
+                //pass number method to build later when we loop it
+                //I think we have to have a loop in here as well since the current number can't change
+
+                if (AILogic3(currentNumber) == true) {
+                    wantNumber(currentNumber, (players.get(2)).getMyNumbers(), (players.get(2).getChips()), chipPool);
+                    System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
+                    System.out.println(", " + (players.get(2)).getChips());
+                } else {
+
+                }
+
+            }
         }
-        
-        
-
     }
-    
-    public static void createPlayer(){
-        int chips=7;
+
+    public static void createPlayer() {
+        int chips = 7;
         ArrayList<Integer> myNumbers = new ArrayList<>();
         ArrayList<Integer> player1 = new ArrayList<>();
         ArrayList<Integer> player2 = new ArrayList<>();
-        players.add(new Player( chips,  myNumbers,  player1, player2));
-        
+        players.add(new Player(chips, myNumbers, player1, player2));
+
+    }
+
+    public static void passNumber() {
+
     }
 
     //AI methods
-    public static boolean AILogic1 (ArrayList<Integer> x, int y, ArrayList<Integer> player1, ArrayList<Integer> player2) {
+    public static boolean AILogic1(ArrayList<Integer> x, int y, ArrayList<Integer> player1, ArrayList<Integer> player2) {
         //true = take; false = pass        
         //x being my arraylist of numbers
         //y being the number that's picked for that round
 
-        
         //for loop to check whether to let the number go around once to collect chips 
         for (int i = 0; i < x.size(); i++) {
             //first check if they're 1 away from mine
@@ -76,27 +124,27 @@ public class CPT {
                     }
                 }
 
-            } 
+            }
 
         }
 
         return true;
 
     }
-    
+
     //x= # of chips in the pool
     //y = the # for that round
-    public static boolean AILogic2 (int x, int y){
-        if (x>=y){
+    public static boolean AILogic2(int x, int y) {
+        if (x >= y) {
             return true;
         }
-        
+
         return true;
     }
-    
+
     //at the beginning of the game, to decide whether to take the number or not
-    public static boolean AILogic3 (int x){
-        if (x<-11){
+    public static boolean AILogic3(int x) {
+        if (x > -11) {
             return true;
         }
         return false;
@@ -152,20 +200,25 @@ public class CPT {
             //get the pooled chips
             z = z + a;
             return true;
-        } else   {
+        } else {
             z--;
             a++;
             return false;
-        } 
+        }
 
     }
-    
+
     //for AI only
     //x = AI number
+    //y = current number
+    //z = # of chips in the pool
     //LEFT OFF HERE 
-     public static void receiveNumber(int x, int y){
+    public static void receiveNumber(int x, int y, int z) {
         //it needs to add to the my numbers list...how do you do this
-        (players.get(x)).setMyNumbers(((players.get(x)).getMyNumbers).add(x));
+        ((players.get(x)).getMyNumbers()).add(y);
+        (players.get(x)).setChips((players.get(x)).getChips() + z);
+
+        //(players.get(x)).setMyNumbers(((players.get(x)).getMyNumbers).add(x));
     }
 
     //x being your list of numbers that you have 
