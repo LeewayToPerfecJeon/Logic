@@ -52,14 +52,16 @@ public class CPT {
                 System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
                 System.out.println(", " + (players.get(1)).getChips());
             } else {
-                //pass number method to build later when we loop it
-                //I think we have to have a loop in here as well since the current number can't change
+                
 
                 if (AILogic3(currentNumber) == true) {
                     receiveNumber(2, currentNumber, chipPool );
                     System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
                     System.out.println(", " + (players.get(2)).getChips());
                 } else {
+                    // we have to have a loop in here if AI doesn't accept the number 
+                    //I think we also have to change logics here for the AIs cause the "first turn" is over
+                    //EXCEPT FOR AI #2**
 
                 }
 
@@ -73,14 +75,14 @@ public class CPT {
                 System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
                 System.out.println(", " + (players.get(1)).getChips());
             } else {
-                //pass number method to build later when we loop it
-                //I think we have to have a loop in here as well since the current number can't change
 
                 if (AILogic3(currentNumber) == true) {
                     wantNumber(currentNumber, (players.get(2)).getMyNumbers(), (players.get(2).getChips()), chipPool);
                     System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
                     System.out.println(", " + (players.get(2)).getChips());
                 } else {
+                    //FIRST THING TO FIX 
+                    // we have to have a loop in here if AI doesn't accept the number 
 
                 }
 
@@ -97,6 +99,7 @@ public class CPT {
 
     }
 
+    //to be built
     public static void passNumber() {
 
     }
@@ -142,7 +145,7 @@ public class CPT {
         return true;
     }
 
-    //at the beginning of the game, to decide whether to take the number or not
+    //for the FIRST TURN, to decide whether to take the number or not
     public static boolean AILogic3(int x) {
         if (x > -11) {
             return true;
