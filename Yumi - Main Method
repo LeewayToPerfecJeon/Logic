@@ -69,6 +69,7 @@ public class CPT {
         //make sure the current number didn't change
         //does this really need two repetitions of itself? Can't think right now
         //REMINDER: NEED THE OTHER AI LOGIC METHODS IN HERE TOO in the inner-most else loop 
+        //NEED TO FIX NOW: take away the AI's chip when they refuse the number, but where do you put this...
         else {
             if (AILogic3(currentNumber) == true) {
                 receiveNumber(1, currentNumber, chipPool);
@@ -81,21 +82,41 @@ public class CPT {
                     System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
                     System.out.println(", " + (players.get(2)).getChips());
                 } else {
-                    //FIRST THING TO FIX 
-                    // we have to have a loop in here if AI doesn't accept the number 
+                    //FIRST THING TO FIX - make the AI and the user give up a chip every time they pass and put in the chip pool
                     do {
-                        if (AILogic3(currentNumber) == true) {
-                            receiveNumber(1, currentNumber, chipPool);
-                            System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
-                            System.out.println(", " + (players.get(1)).getChips());
+                        if (wantNumber(currentNumber, (players.get(0)).getMyNumbers(), (players.get(0).getChips()), chipPool) == true) {
+                          
+                            System.out.print((players.get(0)).getMyNumbers());
+                            System.out.println(", " + (players.get(0)).getChips());
+                            trigger = 1;
                         } else {
-
+                            //chip from the user
+                            chipPool++;
+                            
                             if (AILogic3(currentNumber) == true) {
-                                receiveNumber(2, currentNumber, chipPool);
-                                System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
-                                System.out.println(", " + (players.get(2)).getChips());
-                            } else {
+                                //
+                                (players.get(1)).setChips((players.get(1)).getChips() - 1);
+                                chipPool++;
+                                //
+                                receiveNumber(1, currentNumber, chipPool);
+                                
+                                System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
+                                System.out.println(", " + (players.get(1)).getChips());
                                 trigger = 1;
+                            } else {
+
+                                if (AILogic3(currentNumber) == true) {
+                                    //
+                                    (players.get(2)).setChips((players.get(2)).getChips() - 1);
+                                    chipPool++;
+                                    //
+                                    receiveNumber(2, currentNumber, chipPool);
+                                    
+                                    System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
+                                    System.out.println(", " + (players.get(2)).getChips());
+                                } else {
+
+                                }
                             }
                         }
                     } while (trigger == 0);
@@ -104,12 +125,25 @@ public class CPT {
 
             }
         }
+
+        printPlayers();
+        //
+        //
+        //NEED TO FIX - THE CHIP POOL DOESNT ACCUMULATE** 
+        // ALSO how to reset the chip pool after that number is taken 
+        System.out.println("Number of chips in the chip pool: " + chipPool);
+    }
+
+    public static void printPlayers() {
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println(players.get(i));
+        }
     }
 
     public static void createPlayer() {
         int chips = 7;
         ArrayList<Integer> myNumbers = new ArrayList<>();
-        
+
         players.add(new Player(chips, myNumbers));
 
     }
@@ -168,6 +202,11 @@ public class CPT {
         return false;
     }
 
+    public static boolean AILogic4() {
+
+        return false;
+    }
+
     //game methods
     public static <Integer> ArrayList createNumbers() {
 
@@ -209,6 +248,10 @@ public class CPT {
     //have to initialize a=0 before using this method
     //not within this method b/c it will reset if the user inputs an invalid answer
     //maybe we should rename the arraylist parameters so that we know what they are 
+    //
+    //
+    //NEED TO FIX - DOESNT RETURN THE # of CHIPS IN THE POOL
+    //
     public static boolean wantNumber(int x, ArrayList<Integer> y, int z, int a) throws IOException {
         System.out.println("Would you like to take the number?");
         String answer = br.readLine();
@@ -216,10 +259,11 @@ public class CPT {
             //get number
             y.add(x);
             //get the pooled chips
-            z = z + a;
+            (players.get(0)).setChips((players.get(0)).getChips()+a);
             return true;
         } else {
-            z--;
+            (players.get(0)).setChips((players.get(0)).getChips()-1);
+
             a++;
             return false;
         }
