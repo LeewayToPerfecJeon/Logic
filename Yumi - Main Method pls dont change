@@ -17,6 +17,7 @@ public class CPT {
 
         int currentNumber;
         int chipPool = 0;
+        int trigger = 0;
         System.out.println("Minus Auction");
 
         //you; i=0
@@ -66,6 +67,8 @@ public class CPT {
 
         } //if the player does not accept the number
         //make sure the current number didn't change
+        //does this really need two repetitions of itself? Can't think right now
+        //REMINDER: NEED THE OTHER AI LOGIC METHODS IN HERE TOO in the inner-most else loop 
         else {
             if (AILogic3(currentNumber) == true) {
                 receiveNumber(1, currentNumber, chipPool);
@@ -80,6 +83,22 @@ public class CPT {
                 } else {
                     //FIRST THING TO FIX 
                     // we have to have a loop in here if AI doesn't accept the number 
+                    do {
+                        if (AILogic3(currentNumber) == true) {
+                            receiveNumber(1, currentNumber, chipPool);
+                            System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
+                            System.out.println(", " + (players.get(1)).getChips());
+                        } else {
+
+                            if (AILogic3(currentNumber) == true) {
+                                receiveNumber(2, currentNumber, chipPool);
+                                System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
+                                System.out.println(", " + (players.get(2)).getChips());
+                            } else {
+                                trigger = 1;
+                            }
+                        }
+                    } while (trigger == 0);
 
                 }
 
@@ -90,9 +109,8 @@ public class CPT {
     public static void createPlayer() {
         int chips = 7;
         ArrayList<Integer> myNumbers = new ArrayList<>();
-        ArrayList<Integer> player1 = new ArrayList<>();
-        ArrayList<Integer> player2 = new ArrayList<>();
-        players.add(new Player(chips, myNumbers, player1, player2));
+        
+        players.add(new Player(chips, myNumbers));
 
     }
 
@@ -142,7 +160,7 @@ public class CPT {
         return true;
     }
 
-    //for the FIRST TURN, to decide whether to take the number or not
+    //only for the FIRST TURN, to decide whether to take the number or not
     public static boolean AILogic3(int x) {
         if (x > -11) {
             return true;
