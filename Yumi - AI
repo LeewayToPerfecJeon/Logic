@@ -1,28 +1,24 @@
-ackage cpt;
+package cpt;
 
 import java.util.ArrayList;
 
-public class AI {
-    
+public class Player {
+
     private int chips;
     private ArrayList myNumbers;
     //the other two players except yourself
-    private ArrayList player1;
-    private ArrayList player2;
-    private ArrayList numbersLeft;
+    
 
-    public AI (){
-      //Question: do you have to initialize arraylists? 
+    public Player() {
+        //Question: do we have to initialize arraylists?
         chips = 7;
-        
+
     }
 
-    public AI(int chips, ArrayList myNumbers, ArrayList player1, ArrayList player2, ArrayList numbersLeft) {
+    public Player(int chips, ArrayList myNumbers ) {
         this.chips = chips;
         this.myNumbers = myNumbers;
-        this.player1 = player1;
-        this.player2 = player2;
-        this.numbersLeft = numbersLeft;
+        
     }
 
     public int getChips() {
@@ -33,17 +29,9 @@ public class AI {
         return myNumbers;
     }
 
-    public ArrayList getNumbersLeft() {
-        return numbersLeft;
-    }
+   
 
-    public ArrayList getPlayer1() {
-        return player1;
-    }
-
-    public ArrayList getPlayer2() {
-        return player2;
-    }
+   
 
     public void setChips(int chips) {
         this.chips = chips;
@@ -53,17 +41,18 @@ public class AI {
         this.myNumbers = myNumbers;
     }
 
-    public void setNumbersLeft(ArrayList numbersLeft) {
-        this.numbersLeft = numbersLeft;
-    }
+   
 
-    public void setPlayer1(ArrayList player1) {
-        this.player1 = player1;
-    }
+    
+    
 
-    public void setPlayer2(ArrayList player2) {
-        this.player2 = player2;
-    }
+    //need 2 ways to choose the number
+    //whether to ruin other people's consecutive numbers
+    //or to complete my consecutive numbers 
+    //whether to take this chance or not
+    //how to we program this..? which one should be prioritized??
+    
+    
     
     //things that the AI should consider to make a decision
     //1. is the number consecutive to mine? smaller or larger?
@@ -71,8 +60,15 @@ public class AI {
     //2-1. so check if the number is related to the other players 
     //2-2. should I take the number if the number is small enough? just to mess the other player up? 
     //cause if they're waiting for a number that's in between two numbers it's like HA screw you now you can never make it consecutive
-    //3. are there enough chips in the pool to just take the number?
+    //+3. are there enough chips in the pool to just take the number?
     //3-1. is there a possibility that this number has consecutive numbers that have not come out yet?
     //3-2. ..?
    
     //so which ones need the probability again..?
+
+    @Override
+    public String toString() {
+        String word = "Player Numbers: " + myNumbers + "\t Number of Chips: " + chips ;
+        return word;
+    }
+}
