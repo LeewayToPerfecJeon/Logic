@@ -165,6 +165,9 @@ public class CPT {
     public static void passNumber() {
 
     }
+    //oh shoot you know what we need
+    //we also need a method to check if the number of chips = 0 cause then you're forced to take the number 
+    //REMINDER**************************************
 
     //AI methods
     public static boolean AILogic1(ArrayList<Integer> x, int y, ArrayList<Integer> player1, ArrayList<Integer> player2) {
