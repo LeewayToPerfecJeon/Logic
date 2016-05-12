@@ -51,12 +51,16 @@ public class CPT {
                 System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
                 System.out.println(", " + (players.get(1)).getChips());
             } else {
-
+                (players.get(1)).setChips((players.get(1)).getChips() - 1);
+                chipPool++;
                 if (AILogic3(currentNumber) == true) {
                     receiveNumber(2, currentNumber, chipPool);
                     System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
                     System.out.println(", " + (players.get(2)).getChips());
                 } else {
+                    (players.get(2)).setChips((players.get(2)).getChips() - 1);
+                    chipPool++;
+                    
                     // we have to have a loop in here if AI doesn't accept the number 
                     //I think we also have to change logics here for the AIs cause the "first turn" is over
                     //EXCEPT FOR AI #2**
@@ -78,11 +82,9 @@ public class CPT {
                 System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
                 System.out.println(", " + (players.get(1)).getChips());
             } else {
-                
 
                 (players.get(1)).setChips((players.get(1)).getChips() - 1);
                 chipPool++;
-                
 
                 if (AILogic3(currentNumber) == true) {
                     receiveNumber(2, currentNumber, chipPool);
@@ -90,10 +92,9 @@ public class CPT {
                     System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
                     System.out.println(", " + (players.get(2)).getChips());
                 } else {
-                   
+
                     (players.get(2)).setChips((players.get(2)).getChips() - 1);
                     chipPool++;
-                    
 
                     do {
                         if (wantNumber(currentNumber, (players.get(0)).getMyNumbers(), (players.get(0).getChips()), chipPool) == true) {
@@ -107,7 +108,7 @@ public class CPT {
                             chipPool++;
 
                             if (AILogic3(currentNumber) == true) {
-                                
+
                                 receiveNumber(1, currentNumber, chipPool);
 
                                 System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
@@ -115,22 +116,20 @@ public class CPT {
                                 trigger = 1;
                                 chipPool = 0;
                             } else {
-                                
+
                                 (players.get(1)).setChips((players.get(1)).getChips() - 1);
                                 chipPool++;
-                                
 
                                 if (AILogic3(currentNumber) == true) {
-                                    
+
                                     receiveNumber(2, currentNumber, chipPool);
 
                                     System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
                                     System.out.println(", " + (players.get(2)).getChips());
                                 } else {
-                                    
+
                                     (players.get(2)).setChips((players.get(2)).getChips() - 1);
                                     chipPool++;
-                                    
 
                                 }
                             }
@@ -143,7 +142,7 @@ public class CPT {
         }
         //need to have a new number here only if they're from the else loop..? 
 
-        printPlayers();        
+        printPlayers();
         System.out.println("Number of chips in the chip pool: " + chipPool);
     }
 
@@ -277,7 +276,6 @@ public class CPT {
         } else {
             (players.get(0)).setChips((players.get(0)).getChips() - 1);
 
-       
             return false;
         }
 
