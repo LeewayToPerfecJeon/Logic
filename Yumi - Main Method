@@ -60,11 +60,12 @@ public class CPT {
                 } else {
                     (players.get(2)).setChips((players.get(2)).getChips() - 1);
                     chipPool++;
-                    
-                    // we have to have a loop in here if AI doesn't accept the number 
-                    //I think we also have to change logics here for the AIs cause the "first turn" is over
-                    //EXCEPT FOR AI #2**
 
+                    // we have to have a loop in here if AI doesn't accept the number 
+                    //goes back to the user's turn 
+                    //I think we also have to change logics here for the AIs cause the "first turn" is over
+                    //so put all the AI logic in here except for AI #2 and when AI #2 accepts, get out of the loop
+                    //EXCEPT FOR AI #2**
                 }
 
             }
@@ -73,7 +74,7 @@ public class CPT {
         //make sure the current number didn't change
         //does this really need two repetitions of itself? Can't think right now
         //REMINDER: NEED THE OTHER AI LOGIC METHODS IN HERE TOO in the inner-most else loop 
-        //NEED TO FIX NOW: take away the AI's chip when they refuse the number, but where do you put this...
+        //I think AILogic2?
         else {
             chipPool++;
             if (AILogic3(currentNumber) == true) {
@@ -179,6 +180,7 @@ public class CPT {
                 for (int j = 0; j < player1.size(); j++) {
                     //so if the number is NOT 1 or 2 up from any number the other players have, 
                     //pass the number so that you can collect more chips 
+                    //QUESTION: does it matter if the number is small and other people take it? 
                     if ((x.get(j)) != (y + 1) || x.get(j) != (y - 1) || x.get(j) != (y - 2) || x.get(j) != (y + 2)) {
                         for (int k = 0; k < player2.size(); k++) {
                             if ((x.get(k)) != (y + 1) || x.get(k) != (y - 1) || x.get(k) != (y - 2) || x.get(k) != (y + 2)) {
@@ -196,6 +198,28 @@ public class CPT {
 
     }
 
+    //method must be used after being checked for possible consecutive numbers
+    public static boolean AILogic4(ArrayList<Integer> x, int y, ArrayList<Integer> player1, ArrayList<Integer> player2) {
+        //check if the number is related to other players so that you can ruin their lives
+        //y = current number
+        //so 1 or 2 away from any number they have 
+        //or should I check if it's the middle number of 3 consecutive numbers? 
+        for (int i = 0; i < player1.size(); i++) {
+            if (player1.get(i) == (y - 1) || player1.get(i) == (y + 1) || player1.get(i) == (y - 2) || player1.get(i) == (y + 2)) {
+
+            }
+        }
+        for (int j = 0; j < player2.size(); j++) {
+            if (player2.get(j) == (y - 1) || player2.get(j) == (y + 1) || player2.get(j) == (y - 2) || player2.get(j) == (y + 2)) {
+
+            }
+        }
+        for (int k = 0; k < player1.size(); k++) {
+            //...this is more complicated than I thought 
+        }
+        return false;
+    }
+
     //x= # of chips in the pool
     //y = the # for that round
     public static boolean AILogic2(int x, int y) {
@@ -207,15 +231,11 @@ public class CPT {
     }
 
     //only for the FIRST TURN, to decide whether to take the number or not
+    //QUESTION: does this really only apply to the first turn tho?
     public static boolean AILogic3(int x) {
         if (x > -11) {
             return true;
         }
-        return false;
-    }
-
-    public static boolean AILogic4() {
-
         return false;
     }
 
