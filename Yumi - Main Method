@@ -71,50 +71,66 @@ public class CPT {
         //REMINDER: NEED THE OTHER AI LOGIC METHODS IN HERE TOO in the inner-most else loop 
         //NEED TO FIX NOW: take away the AI's chip when they refuse the number, but where do you put this...
         else {
+            chipPool++;
             if (AILogic3(currentNumber) == true) {
                 receiveNumber(1, currentNumber, chipPool);
+                chipPool = 0;
                 System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
                 System.out.println(", " + (players.get(1)).getChips());
             } else {
+                
+
+                (players.get(1)).setChips((players.get(1)).getChips() - 1);
+                chipPool++;
+                
 
                 if (AILogic3(currentNumber) == true) {
                     receiveNumber(2, currentNumber, chipPool);
+                    chipPool = 0;
                     System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
                     System.out.println(", " + (players.get(2)).getChips());
                 } else {
-                    //FIRST THING TO FIX - make the AI and the user give up a chip every time they pass and put in the chip pool
+                   
+                    (players.get(2)).setChips((players.get(2)).getChips() - 1);
+                    chipPool++;
+                    
+
                     do {
                         if (wantNumber(currentNumber, (players.get(0)).getMyNumbers(), (players.get(0).getChips()), chipPool) == true) {
-                          
+
                             System.out.print((players.get(0)).getMyNumbers());
                             System.out.println(", " + (players.get(0)).getChips());
                             trigger = 1;
+                            chipPool = 0;
                         } else {
                             //chip from the user
                             chipPool++;
-                            
+
                             if (AILogic3(currentNumber) == true) {
-                                //
-                                (players.get(1)).setChips((players.get(1)).getChips() - 1);
-                                chipPool++;
-                                //
-                                receiveNumber(1, currentNumber, chipPool);
                                 
+                                receiveNumber(1, currentNumber, chipPool);
+
                                 System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
                                 System.out.println(", " + (players.get(1)).getChips());
                                 trigger = 1;
+                                chipPool = 0;
                             } else {
+                                
+                                (players.get(1)).setChips((players.get(1)).getChips() - 1);
+                                chipPool++;
+                                
 
                                 if (AILogic3(currentNumber) == true) {
-                                    //
-                                    (players.get(2)).setChips((players.get(2)).getChips() - 1);
-                                    chipPool++;
-                                    //
-                                    receiveNumber(2, currentNumber, chipPool);
                                     
+                                    receiveNumber(2, currentNumber, chipPool);
+
                                     System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
                                     System.out.println(", " + (players.get(2)).getChips());
                                 } else {
+                                    
+                                    (players.get(2)).setChips((players.get(2)).getChips() - 1);
+                                    chipPool++;
+                                    
 
                                 }
                             }
@@ -125,12 +141,9 @@ public class CPT {
 
             }
         }
+        //need to have a new number here only if they're from the else loop..? 
 
-        printPlayers();
-        //
-        //
-        //NEED TO FIX - THE CHIP POOL DOESNT ACCUMULATE** 
-        // ALSO how to reset the chip pool after that number is taken 
+        printPlayers();        
         System.out.println("Number of chips in the chip pool: " + chipPool);
     }
 
@@ -259,12 +272,12 @@ public class CPT {
             //get number
             y.add(x);
             //get the pooled chips
-            (players.get(0)).setChips((players.get(0)).getChips()+a);
+            (players.get(0)).setChips((players.get(0)).getChips() + a);
             return true;
         } else {
-            (players.get(0)).setChips((players.get(0)).getChips()-1);
+            (players.get(0)).setChips((players.get(0)).getChips() - 1);
 
-            a++;
+       
             return false;
         }
 
