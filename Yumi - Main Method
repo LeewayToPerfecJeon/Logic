@@ -165,9 +165,16 @@ public class CPT {
     public static void passNumber() {
 
     }
-    //oh shoot you know what we need
-    //we also need a method to check if the number of chips = 0 cause then you're forced to take the number 
-    //REMINDER**************************************
+
+    //we also need a method to check if the number of chips = 0 cause then you're forced to take the number
+//have to check this every turn so that at any time you have to take the number if you have zero chip
+    public static boolean checkZeroChips(int chips) {
+        if (chips == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     //AI methods
     public static boolean AILogic1(ArrayList<Integer> x, int y, ArrayList<Integer> player1, ArrayList<Integer> player2) {
@@ -201,24 +208,42 @@ public class CPT {
 
     }
 
+    //I THINK THIS METHOD MIGHT BE WRONG (logically)
     //method must be used after being checked for possible consecutive numbers
-    public static boolean AILogic4(ArrayList<Integer> x, int y, ArrayList<Integer> player1, ArrayList<Integer> player2) {
+    public static boolean AILogic4(ArrayList<Integer> x, int y, ArrayList<Integer> player1, ArrayList<Integer> player2, int chips) {
         //check if the number is related to other players so that you can ruin their lives
         //y = current number
         //so 1 or 2 away from any number they have 
         //or should I check if it's the middle number of 3 consecutive numbers? 
         for (int i = 0; i < player1.size(); i++) {
             if (player1.get(i) == (y - 1) || player1.get(i) == (y + 1) || player1.get(i) == (y - 2) || player1.get(i) == (y + 2)) {
+                if ((y + chips) > -4) {
+                    return true;
 
+                }
             }
         }
         for (int j = 0; j < player2.size(); j++) {
             if (player2.get(j) == (y - 1) || player2.get(j) == (y + 1) || player2.get(j) == (y - 2) || player2.get(j) == (y + 2)) {
+                if ((y + chips) > -4) {
+                    return true;
 
+                }
             }
         }
-        for (int k = 0; k < player1.size(); k++) {
-            //...this is more complicated than I thought 
+
+        return false;
+    }
+
+    //if they are missing the middle number 
+    public static boolean AILogic5(ArrayList<Integer> player1, ArrayList<Integer> player2) {
+        for (int i = 0; i < player1.size() - 2; i++) {
+            for (int j = 0; j < player1.size(); j++) {
+                if ((i + 2 != j) && (player1.get(i) + 2) == (player1.get(j))) {
+                    return true;
+                }
+            }
+
         }
         return false;
     }
