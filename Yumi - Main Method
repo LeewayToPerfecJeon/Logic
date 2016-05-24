@@ -236,11 +236,24 @@ public class CPT {
     }
 
     //if they are missing the middle number 
-    public static boolean AILogic5(ArrayList<Integer> player1, ArrayList<Integer> player2) {
+    //x = current number
+    public static boolean AILogic5(ArrayList<Integer> player1, ArrayList<Integer> player2, int x) {
         for (int i = 0; i < player1.size() - 2; i++) {
             for (int j = 0; j < player1.size(); j++) {
                 if ((i + 2 != j) && (player1.get(i) + 2) == (player1.get(j))) {
-                    return true;
+                    if (x == (player1.get(i) + 1)) {
+                        return true;
+                    }
+                }
+            }
+
+        }
+        for (int i = 0; i < player2.size() - 2; i++) {
+            for (int j = 0; j < player2.size(); j++) {
+                if ((i + 2 != j) && (player2.get(i) + 2) == (player2.get(j))) {
+                    if (x == (player1.get(i) + 1)) {
+                        return true;
+                    }
                 }
             }
 
