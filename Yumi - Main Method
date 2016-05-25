@@ -217,7 +217,7 @@ public class CPT {
         //or should I check if it's the middle number of 3 consecutive numbers? 
         for (int i = 0; i < player1.size(); i++) {
             if (player1.get(i) == (y - 1) || player1.get(i) == (y + 1) || player1.get(i) == (y - 2) || player1.get(i) == (y + 2)) {
-                if ((y + chips) > -4) {
+                if ((y + chips) > -3) {
                     return true;
 
                 }
@@ -225,7 +225,7 @@ public class CPT {
         }
         for (int j = 0; j < player2.size(); j++) {
             if (player2.get(j) == (y - 1) || player2.get(j) == (y + 1) || player2.get(j) == (y - 2) || player2.get(j) == (y + 2)) {
-                if ((y + chips) > -4) {
+                if ((y + chips) > -3) {
                     return true;
 
                 }
@@ -241,8 +241,10 @@ public class CPT {
         for (int i = 0; i < player1.size() - 2; i++) {
             for (int j = 0; j < player1.size(); j++) {
                 if ((i + 2 != j) && (player1.get(i) + 2) == (player1.get(j))) {
-                    if (x == (player1.get(i) + 1)) {
-                        return true;
+                    if (player2.get(i) != (x + 1)) {
+                        if (x == (player1.get(i) + 1)) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -251,8 +253,10 @@ public class CPT {
         for (int i = 0; i < player2.size() - 2; i++) {
             for (int j = 0; j < player2.size(); j++) {
                 if ((i + 2 != j) && (player2.get(i) + 2) == (player2.get(j))) {
-                    if (x == (player1.get(i) + 1)) {
-                        return true;
+                    if (player1.get(i) != (x + 1)) {
+                        if (x == (player2.get(i) + 1)) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -264,7 +268,7 @@ public class CPT {
     //x= # of chips in the pool
     //y = the # for that round
     public static boolean AILogic2(int x, int y) {
-        if (x >= y) {
+        if (x + y >= 0) {
             return true;
         }
 
@@ -280,7 +284,7 @@ public class CPT {
         return false;
     }
 
-    //game methods
+    //game methods starting from here 
     public static <Integer> ArrayList createNumbers() {
 
         for (int i = -1; i > -21; i--) {
