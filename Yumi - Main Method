@@ -63,12 +63,49 @@ public class CPT {
                     (players.get(2)).setChips((players.get(2)).getChips() - 1);
                     chipPool++;
 
-                    //do I have to make it into a method to loop??
-                    // we have to have a loop in here if AI doesn't accept the number 
-                    //goes back to the user's turn 
-                    //I think we also have to change logics here for the AIs cause the "first turn" is over
-                    //so put all the AI logic in here except for AI #2 and when AI #2 accepts, get out of the loop
-                    //EXCEPT FOR AI #2**
+                    do {
+                        if (wantNumber(currentNumber, (players.get(0)).getMyNumbers(), (players.get(0).getChips()), chipPool) == true) {
+
+                            System.out.print((players.get(0)).getMyNumbers());
+                            System.out.println(", " + (players.get(0)).getChips());
+                            trigger = 1;
+                            chipPool = 0;
+                            x = 0;
+                        } else {
+                            //chip from the user
+                            chipPool++;
+
+                            if (AILogic3(currentNumber) == true) {
+
+                                receiveNumber(1, currentNumber, chipPool);
+
+                                System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
+                                System.out.println(", " + (players.get(1)).getChips());
+                                trigger = 1;
+                                chipPool = 0;
+                                x = 1;
+                            } else {
+
+                                (players.get(1)).setChips((players.get(1)).getChips() - 1);
+                                chipPool++;
+
+                                if (AILogic3(currentNumber) == true) {
+
+                                    receiveNumber(2, currentNumber, chipPool);
+                                    x = 2;
+                                    trigger = 1;
+                                    chipPool=0;
+                                    System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
+                                    System.out.println(", " + (players.get(2)).getChips());
+                                } else {
+
+                                    (players.get(2)).setChips((players.get(2)).getChips() - 1);
+                                    chipPool++;
+
+                                }
+                            }
+                        }
+                    } while (trigger == 0);
                 }
 
             }
@@ -325,13 +362,9 @@ public class CPT {
 
     }
 
-    //to be built
-    public static void passNumber() {
+   
 
-    }
-
-    //we also need a method to check if the number of chips = 0 cause then you're forced to take the number
-//have to check this every turn so that at any time you have to take the number if you have zero chip
+  
     public static boolean checkZeroChips(int chips) {
         if (chips == 0) {
             return true;
@@ -490,15 +523,10 @@ public class CPT {
         return hiddenCube;
     }
 
-    //do we really need classes for this tho? Do we have to use it?
+   
     // x=number list; y=your numbers list; z=your number of chips; a=chip pool for that number
     //have to initialize a=0 before using this method
-    //not within this method b/c it will reset if the user inputs an invalid answer
-    //maybe we should rename the arraylist parameters so that we know what they are 
-    //
-    //
-    //NEED TO FIX - DOESNT RETURN THE # of CHIPS IN THE POOL
-    //
+    
     public static boolean wantNumber(int x, ArrayList<Integer> y, int z, int a) throws IOException {
         System.out.println("Would you like to take the number?");
         String answer = br.readLine();
