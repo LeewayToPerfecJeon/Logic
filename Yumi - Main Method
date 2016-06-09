@@ -52,6 +52,7 @@ public class CPT {
 
                 System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
                 System.out.println(", " + (players.get(1)).getChips());
+                x=1;
             } else {
                 (players.get(1)).setChips((players.get(1)).getChips() - 1);
                 chipPool++;
@@ -59,6 +60,7 @@ public class CPT {
                     receiveNumber(2, currentNumber, chipPool);
                     System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
                     System.out.println(", " + (players.get(2)).getChips());
+                    x=2;
                 } else {
                     (players.get(2)).setChips((players.get(2)).getChips() - 1);
                     chipPool++;
@@ -193,7 +195,7 @@ public class CPT {
         //OFFICIAL LOOP STARTS HERE
         //
         //
-        printPlayers(chipPool);
+        
 
         //I think the loop should generate a new number every time that it loops so only have the new currentNumber be generated
         //at the beginning of the loop 
@@ -479,12 +481,14 @@ public class CPT {
     }
 
     //only for the FIRST TURN, to decide whether to take the number or not
-    //QUESTION: does this really only apply to the first turn tho?
+    
     public static boolean AILogic3(int x) {
         if (x > -11) {
             return true;
         }
+        else{
         return false;
+        }
     }
 
     //game methods starting from here 
