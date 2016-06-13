@@ -477,7 +477,7 @@ public class CPT {
             return true;
         }
 
-        return true;
+        return false;
     }
 
     //only for the FIRST TURN, to decide whether to take the number or not
