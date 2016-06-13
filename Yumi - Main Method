@@ -347,6 +347,17 @@ public class CPT {
 
         } while (trigger2 == 0);
 
+
+int semiTotal1 = finalCheckConsecutive((players.get(0)).getMyNumbers());
+int total1 = finalTotal(semiTotal1, (players.get(0)).getChips());
+
+int semiTotal2 = finalCheckConsecutive((players.get(1)).getMyNumbers());
+int total2 = finalTotal(semiTotal2, (players.get(1)).getChips());
+
+int semiTotal3 = finalCheckConsecutive((players.get(2)).getMyNumbers());
+int total3 = finalTotal(semiTotal3, (players.get(2)).getChips());
+
+checkWinner(total1, total2, total3);
     }
 
     public static void printPlayers(int chipPool) {
