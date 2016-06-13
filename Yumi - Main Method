@@ -532,6 +532,11 @@ public class CPT {
     //have to initialize a=0 before using this method
     
     public static boolean wantNumber(int x, ArrayList<Integer> y, int z, int a) throws IOException {
+    if (z==0){
+    System.out.println("You do not have enough chips to pass the number.");
+    System.out.println("You will automatically accept the number.");
+    }
+    else{
         System.out.println("Would you like to take the number?");
         String answer = br.readLine();
         if (answer.equalsIgnoreCase("yes")) {
@@ -544,6 +549,7 @@ public class CPT {
             (players.get(0)).setChips((players.get(0)).getChips() - 1);
 
             return false;
+        }
         }
 
     }
@@ -591,22 +597,16 @@ public class CPT {
     public static void checkWinner(int total1, int total2, int total3) {
         if (total1 > total2 && total1 > total3) {
             //assuming that the player will be set as player #1
-            System.out.println("You have won.");
+            System.out.println("Congratulations! You have won.");
         } else if (total2 > total1 && total2 > total3) {
-            System.out.println("Player 2 has won.");
+            System.out.println("Player 1 has won.");
+            System.out.println("The death match is loading...");
         } else {
-            System.out.println("Player 3 has won.");
+            System.out.println("Player 2 has won.");
+            System.out.println("The death match is loading...");
         }
     }
 
-    public static boolean checkChips(int chips) {
-        if (chips == 0) {
-            System.out.println("You do not have enough chips to skip this number.");
-            return false;
-            //then after this it would automatically run the getNumber method
-        } else {
-            return true;
-        }
-    }
+    
 
 }
