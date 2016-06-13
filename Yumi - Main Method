@@ -348,16 +348,16 @@ public class CPT {
         } while (trigger2 == 0);
 
 
-int semiTotal1 = finalCheckConsecutive((players.get(0)).getMyNumbers());
-int total1 = finalTotal(semiTotal1, (players.get(0)).getChips());
+    int semiTotal1 = finalCheckConsecutive((players.get(0)).getMyNumbers());
+    int total1 = finalTotal(semiTotal1, (players.get(0)).getChips());
+    
+    int semiTotal2 = finalCheckConsecutive((players.get(1)).getMyNumbers());
+    int total2 = finalTotal(semiTotal2, (players.get(1)).getChips());
 
-int semiTotal2 = finalCheckConsecutive((players.get(1)).getMyNumbers());
-int total2 = finalTotal(semiTotal2, (players.get(1)).getChips());
+    int semiTotal3 = finalCheckConsecutive((players.get(2)).getMyNumbers());
+    int total3 = finalTotal(semiTotal3, (players.get(2)).getChips());
 
-int semiTotal3 = finalCheckConsecutive((players.get(2)).getMyNumbers());
-int total3 = finalTotal(semiTotal3, (players.get(2)).getChips());
-
-checkWinner(total1, total2, total3);
+    checkWinner(total1, total2, total3);
     }
 
     public static void printPlayers(int chipPool) {
@@ -457,7 +457,7 @@ checkWinner(total1, total2, total3);
         for (int i = 0; i < player1.size() - 2; i++) {
             for (int j = 0; j < player1.size(); j++) {
                 if ((i + 2 != j) && (player1.get(i) + 2) == (player1.get(j))) {
-                    if (player2.get(i) != (x + 1)) {
+                    if (player2.get(i) != (x + 1)&& (player2.get(i)>=0) ) {
                         if (x == (player1.get(i) + 1)) {
                             return true;
                         }
