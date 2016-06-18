@@ -19,7 +19,7 @@ public class CPT {
         int currentNumber;
         int chipPool = 0;
         int trigger = 0;
-        
+
         int x = 0;
         System.out.println("Minus Auction");
 
@@ -46,56 +46,51 @@ public class CPT {
             //new number
             currentNumber = getNumber(numbers);
             System.out.println("Number: " + currentNumber);
-            
 
-                    do {
-                        if (wantNumber(currentNumber, (players.get(0)).getMyNumbers(), (players.get(0).getChips()), chipPool) == true) {
+            do {
+                if (wantNumber(currentNumber, (players.get(0)).getMyNumbers(), (players.get(0).getChips()), chipPool) == true) {
 
-                            System.out.print((players.get(0)).getMyNumbers());
-                            System.out.println(", " + (players.get(0)).getChips());
+                    System.out.print((players.get(0)).getMyNumbers());
+                    System.out.println(", " + (players.get(0)).getChips());
+                    trigger = 1;
+                    chipPool = 0;
+                    x = 0;
+                } else {
+                    //chip from the user
+                    chipPool++;
+
+                    if (AILogic3(currentNumber) == true) {
+
+                        receiveNumber(1, currentNumber, chipPool);
+
+                        System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
+                        System.out.println(", " + (players.get(1)).getChips());
+                        trigger = 1;
+                        chipPool = 0;
+                        x = 1;
+                    } else {
+
+                        (players.get(1)).setChips((players.get(1)).getChips() - 1);
+                        chipPool++;
+
+                        if (AILogic3(currentNumber) == true) {
+
+                            receiveNumber(2, currentNumber, chipPool);
+                            x = 2;
                             trigger = 1;
                             chipPool = 0;
-                            x = 0;
+                            System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
+                            System.out.println(", " + (players.get(2)).getChips());
                         } else {
-                            //chip from the user
+
+                            (players.get(2)).setChips((players.get(2)).getChips() - 1);
                             chipPool++;
 
-                            if (AILogic3(currentNumber) == true) {
-
-                                receiveNumber(1, currentNumber, chipPool);
-
-                                System.out.print("AI #1: " + (players.get(1)).getMyNumbers());
-                                System.out.println(", " + (players.get(1)).getChips());
-                                trigger = 1;
-                                chipPool = 0;
-                                x = 1;
-                            } else {
-
-                                (players.get(1)).setChips((players.get(1)).getChips() - 1);
-                                chipPool++;
-
-                                if (AILogic3(currentNumber) == true) {
-
-                                    receiveNumber(2, currentNumber, chipPool);
-                                    x = 2;
-                                    trigger = 1;
-                                    chipPool = 0;
-                                    System.out.print("AI #2: " + (players.get(2)).getMyNumbers());
-                                    System.out.println(", " + (players.get(2)).getChips());
-                                } else {
-
-                                    (players.get(2)).setChips((players.get(2)).getChips() - 1);
-                                    chipPool++;
-
-                                }
-                            }
                         }
-                    } while (trigger == 0);
+                    }
                 }
-
-            
-
-         //still 1st turn 
+            } while (trigger == 0);
+        } //still 1st turn 
         //if the player does not accept the number
         else {
             chipPool++;
@@ -130,7 +125,7 @@ public class CPT {
                             chipPool = 0;
                             x = 0;
                         } else {
-                            
+
                             chipPool++;
 
                             if (AILogic3(currentNumber) == true) {
@@ -177,149 +172,91 @@ public class CPT {
         //OFFICIAL LOOP STARTS HERE
         //
         //
-        //I think the loop should generate a new number every time that it loops so only have the new currentNumber be generated
-        //at the beginning of the loop 
+        
         do {
 
             if (trigger3 != 1) {
                 if (trigger4 == 1) {
-                    
 
-                        trigger4 = 0;
-                        if (checkZeroChips((players.get(1)).getChips()) == true) {
-                            receiveNumber(1, currentNumber, chipPool);
-                        } else if (AILogic1((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers()) == true && AILogic4((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers(), chipPool) == true) {
-                            receiveNumber(1, currentNumber, chipPool);
-                        } else if (AILogic5((players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers(), currentNumber) == true || AILogic2(chipPool, currentNumber) == true) {
-                            receiveNumber(1, currentNumber, chipPool);
+                    trigger4 = 0;
+                    x = 1;
+                    if (checkZeroChips((players.get(1)).getChips()) == true) {
+                        receiveNumber(1, currentNumber, chipPool);
+
+                    } else if (AILogic1((players.get(1)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers()) == true && AILogic4((players.get(1)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers(), chipPool) == true) {
+                        receiveNumber(1, currentNumber, chipPool);
+
+                    } else if (AILogic5((players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers(), currentNumber) == true || AILogic2(chipPool, currentNumber) == true) {
+                        receiveNumber(1, currentNumber, chipPool);
+
+                    } else {
+                        (players.get(1)).setChips((players.get(1)).getChips() - 1);
+                        chipPool++;
+                        x = 2;
+                        if (checkZeroChips((players.get(2)).getChips()) == true) {
+                            receiveNumber(2, currentNumber, chipPool);
+                        } else if (AILogic1((players.get(2)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers()) == true && AILogic4((players.get(2)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers(), chipPool) == true) {
+                            receiveNumber(2, currentNumber, chipPool);
+                        } else if (AILogic5((players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers(), currentNumber) == true || AILogic2(chipPool, currentNumber) == true) {
+                            receiveNumber(2, currentNumber, chipPool);
                         } else {
-                            (players.get(1)).setChips((players.get(1)).getChips() - 1);
+                            (players.get(2)).setChips((players.get(2)).getChips() - 1);
                             chipPool++;
-                            x = 2;
-                            if (checkZeroChips((players.get(2)).getChips()) == true) {
-                                receiveNumber(2, currentNumber, chipPool);
-                            } else if (AILogic1((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers()) == true && AILogic4((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers(), chipPool) == true) {
-                                receiveNumber(2, currentNumber, chipPool);
-                            } else if (AILogic5((players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers(), currentNumber) == true || AILogic2(chipPool, currentNumber) == true) {
-                                receiveNumber(2, currentNumber, chipPool);
-                            } else {
-                                (players.get(2)).setChips((players.get(2)).getChips() - 1);
-                                chipPool++;
-                                x = 0;
-                                do {
-                                    System.out.println("Current number: " + currentNumber);
-                                    trigger4 = 0;
-                                    if (wantNumber(currentNumber, (players.get(0)).getMyNumbers(), (players.get(0).getChips()), chipPool) == true) {
+                            x = 0;
+                            do {
+                                System.out.println("Current number: " + currentNumber);
 
-                                        System.out.print((players.get(0)).getMyNumbers());
-                                        System.out.println(", " + (players.get(0)).getChips());
+                                if (wantNumber(currentNumber, (players.get(0)).getMyNumbers(), (players.get(0).getChips()), chipPool) == true) {
+
+                                    System.out.print((players.get(0)).getMyNumbers());
+                                    System.out.println(", " + (players.get(0)).getChips());
+                                    trigger = 1;
+                                    chipPool = 0;
+
+                                } else {
+
+                                    chipPool++;
+                                    x = 1;
+
+                                    if (checkZeroChips((players.get(1)).getChips()) == true) {
+                                        receiveNumber(1, currentNumber, chipPool);
                                         trigger = 1;
-                                        chipPool = 0;
-                                        trigger4 = 1;
+                                    } else if (AILogic1((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers()) == true && AILogic4((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers(), chipPool) == true) {
+                                        receiveNumber(1, currentNumber, chipPool);
+                                        trigger = 1;
+                                    } else if (AILogic5((players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers(), currentNumber) == true || AILogic2(chipPool, currentNumber) == true) {
+                                        receiveNumber(1, currentNumber, chipPool);
+                                        trigger = 1;
                                     } else {
-
+                                        (players.get(1)).setChips((players.get(1)).getChips() - 1);
                                         chipPool++;
-                                        x = 1;
-
-                                        if (checkZeroChips((players.get(1)).getChips()) == true) {
-                                            receiveNumber(1, currentNumber, chipPool);
+                                        x = 2;
+                                        if (checkZeroChips((players.get(2)).getChips()) == true) {
+                                            receiveNumber(2, currentNumber, chipPool);
                                             trigger = 1;
-                                        } else if (AILogic1((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers()) == true && AILogic4((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers(), chipPool) == true) {
-                                            receiveNumber(1, currentNumber, chipPool);
+                                        } else if (AILogic1((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers()) == true && AILogic4((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers(), chipPool) == true) {
+                                            receiveNumber(2, currentNumber, chipPool);
                                             trigger = 1;
-                                        } else if (AILogic5((players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers(), currentNumber) == true || AILogic2(chipPool, currentNumber) == true) {
-                                            receiveNumber(1, currentNumber, chipPool);
+                                        } else if (AILogic5((players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers(), currentNumber) == true || AILogic2(chipPool, currentNumber) == true) {
+                                            receiveNumber(2, currentNumber, chipPool);
                                             trigger = 1;
                                         } else {
-                                            (players.get(1)).setChips((players.get(1)).getChips() - 1);
-                                            chipPool++;
-                                            x = 2;
-                                            if (checkZeroChips((players.get(2)).getChips()) == true) {
-                                                receiveNumber(2, currentNumber, chipPool);
-                                                trigger = 1;
-                                            } else if (AILogic1((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers()) == true && AILogic4((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers(), chipPool) == true) {
-                                                receiveNumber(2, currentNumber, chipPool);
-                                                trigger = 1;
-                                            } else if (AILogic5((players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers(), currentNumber) == true || AILogic2(chipPool, currentNumber) == true) {
-                                                receiveNumber(2, currentNumber, chipPool);
-                                                trigger = 1;
-                                            } else {
 
-                                                (players.get(2)).setChips((players.get(2)).getChips() - 1);
-                                                chipPool++;
-                                                x = 0;
-                                            }
+                                            (players.get(2)).setChips((players.get(2)).getChips() - 1);
+                                            chipPool++;
+                                            x = 0;
                                         }
                                     }
-                                } while (trigger == 0);
-                            }
+                                }
+                            } while (trigger == 0);
                         }
+                    }
 
-//                    } else if (x == 2) {
-//                        trigger4 = 0;
-//                        if (checkZeroChips((players.get(2)).getChips()) == true) {
-//                            receiveNumber(2, currentNumber, chipPool);
-//                        } else if (AILogic1((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers()) == true && AILogic4((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers(), chipPool) == true) {
-//                            receiveNumber(2, currentNumber, chipPool);
-//                        } else if (AILogic5((players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers(), currentNumber) == true || AILogic2(chipPool, currentNumber) == true) {
-//                            receiveNumber(2, currentNumber, chipPool);
-//                        } else {
-//
-//                            (players.get(2)).setChips((players.get(2)).getChips() - 1);
-//                            chipPool++;
-//                            x = 0;
-//                            do {
-//                                System.out.println("Current number: " + currentNumber);
-//                                if (wantNumber(currentNumber, (players.get(0)).getMyNumbers(), (players.get(0).getChips()), chipPool) == true) {
-//
-//                                    System.out.print((players.get(0)).getMyNumbers());
-//                                    System.out.println(", " + (players.get(0)).getChips());
-//                                    trigger = 1;
-//                                    chipPool = 0;
-//                                    trigger4 = 1;
-//                                } else {
-//
-//                                    chipPool++;
-//                                    x = 1;
-//
-//                                    if (checkZeroChips((players.get(1)).getChips()) == true) {
-//                                        receiveNumber(1, currentNumber, chipPool);
-//                                        trigger = 1;
-//                                    } else if (AILogic1((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers()) == true && AILogic4((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers(), chipPool) == true) {
-//                                        receiveNumber(1, currentNumber, chipPool);
-//                                        trigger = 1;
-//                                    } else if (AILogic5((players.get(0)).getMyNumbers(), (players.get(2)).getMyNumbers(), currentNumber) == true || AILogic2(chipPool, currentNumber) == true) {
-//                                        receiveNumber(1, currentNumber, chipPool);
-//                                        trigger = 1;
-//                                    } else {
-//                                        (players.get(1)).setChips((players.get(1)).getChips() - 1);
-//                                        chipPool++;
-//                                        x = 2;
-//                                        if (checkZeroChips((players.get(2)).getChips()) == true) {
-//                                            receiveNumber(2, currentNumber, chipPool);
-//                                            trigger = 1;
-//                                        } else if (AILogic1((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers()) == true && AILogic4((players.get(x)).getMyNumbers(), currentNumber, (players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers(), chipPool) == true) {
-//                                            receiveNumber(2, currentNumber, chipPool);
-//                                            trigger = 1;
-//                                        } else if (AILogic5((players.get(0)).getMyNumbers(), (players.get(1)).getMyNumbers(), currentNumber) == true || AILogic2(chipPool, currentNumber) == true) {
-//                                            receiveNumber(2, currentNumber, chipPool);
-//                                            trigger = 1;
-//                                        } else {
-//
-//                                            (players.get(2)).setChips((players.get(2)).getChips() - 1);
-//                                            chipPool++;
-//                                            x = 0;
-//                                        }
-//                                    }
-//                                }
-//                            } while (trigger == 0);
-//                        }
-//                    }
-
-                    //above this is all repeated 
-                }else {
+                   
+                } else {
                     trigger4 = 0;
                     chipPool = 0;
+                    //new number
                     currentNumber = getNumber(numbers);
                     System.out.println("Number: " + currentNumber);
                     if (x == 0) {
@@ -461,15 +398,14 @@ public class CPT {
                         }
                     }
 
-                
+                }
+                printPlayers(chipPool);
 
+                if (numbers.size() == 0) {
+                    trigger3 = 1;
+
+                }
             }
-            printPlayers(chipPool);
-
-            if (numbers.size() == 0) {
-                trigger3 = 1;
-          
-            }}
         } while (trigger3 == 0);
 
         int semiTotal1 = finalCheckConsecutive((players.get(0)).getMyNumbers());
@@ -483,7 +419,6 @@ public class CPT {
 
         checkWinner(total1, total2, total3);
     }
-        
 
     public static void printPlayers(int chipPool) {
         for (int i = 0; i < players.size(); i++) {
@@ -576,29 +511,33 @@ public class CPT {
     //if they are missing the middle number 
     //x = current number
     public static boolean AILogic5(ArrayList<Integer> player1, ArrayList<Integer> player2, int x) {
-        for (int i = 0; i < player1.size() - 2; i++) {
-            for (int j = 0; j < player1.size(); j++) {
-                if ((i + 2 != j) && (player1.get(i) + 2) == (player1.get(j))) {
-                    if (player2.get(i) != (x + 1) && (player2.get(i) >= 0)) {
-                        if (x == (player1.get(i) + 1)) {
-                            return true;
+        if (player1.size() > 0) {
+            for (int i = 0; i < player1.size() - 2; i++) {
+                for (int j = 0; j < player1.size(); j++) {
+                    if ((i + 2 != j) && (player1.get(i) + 2) == (player1.get(j))) {
+                        if (player2.get(i) != (x + 1) && (player2.get(i) >= 0)) {
+                            if (x == (player1.get(i) + 1)) {
+                                return true;
+                            }
                         }
                     }
                 }
-            }
 
+            }
         }
-        for (int i = 0; i < player2.size() - 2; i++) {
-            for (int j = 0; j < player2.size(); j++) {
-                if ((i + 2 != j) && (player2.get(i) + 2) == (player2.get(j))) {
-                    if (player1.get(i) != (x + 1)) {
-                        if (x == (player2.get(i) + 1)) {
-                            return true;
+        if (player2.size() > 0) {
+            for (int i = 0; i < player2.size() - 2; i++) {
+                for (int j = 0; j < player2.size(); j++) {
+                    if ((i + 2 != j) && (player2.get(i) + 2) == (player2.get(j))) {
+                        if (player1.get(i) != (x + 1)) {
+                            if (x == (player2.get(i) + 1)) {
+                                return true;
+                            }
                         }
                     }
                 }
-            }
 
+            }
         }
         return false;
     }
